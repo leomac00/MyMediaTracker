@@ -28,7 +28,7 @@ Now you can access [Swagger Page](http://localhost:8080/swagger-ui/index.html#/)
 Default username and password: admin:admin123
 ## TODO
 - [x] Swagger
-- [ ] Authentication (JWT) (stopped at AuthService)
+- [x] Authentication (JWT)
 - [ ] Entities
 - [ ] Tests
 - [ ] Content negotiation
