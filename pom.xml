@@ -20,6 +20,8 @@
         <testcontainers.version>1.16.3</testcontainers.version>
         <rest-assured.version>4.5.0</rest-assured.version>
         <java-jwt.version>3.18.3</java-jwt.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
     <dependencies>
         <dependency>
@@ -99,7 +101,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.28</version>
+            <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

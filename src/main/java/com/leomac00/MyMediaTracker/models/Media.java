@@ -1,9 +1,7 @@
 package com.leomac00.MyMediaTracker.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,6 +10,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "media")
 @Data
+@Builder
 public class Media implements Serializable {
     private static final long serialVersionUID = 1L;
 
