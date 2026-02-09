@@ -26,4 +26,6 @@ public class Media implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "media_type_id", referencedColumnName = "id")
     private MediaType mediaType;
+    @Column(nullable = false)
+    private Boolean deleted = false;
 }

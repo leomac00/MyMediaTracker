@@ -19,4 +19,6 @@ public class MediaType implements Serializable {
     private Long id;
     @Column(length = 128, nullable = false)
     private String name;
+    @Column(nullable = false)
+    private Boolean deleted = false;
 }

@@ -4,7 +4,10 @@ import com.leomac00.MyMediaTracker.data.dtos.MediaDto;
 import com.leomac00.MyMediaTracker.models.Media;
 import com.leomac00.MyMediaTracker.services.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 
@@ -14,10 +17,34 @@ public class MediaController {
     private MediaService service;
 
     @GetMapping("/{id}")
-    public Media findById(@PathVariable(name="id") Long id){
-        return service.findById(id);
+    public ResponseEntity<Media> getById(@PathVariable(name="id") Long id){
+        return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Media>> getAll(){
+        List<Media> allMedia = service.findAll();
+        return ResponseEntity.ok(allMedia);
     }
 
     @PostMapping("/create")
-    public Media create(@RequestBody MediaDto mediaTobeCreated) {return service.create(mediaTobeCreated); }
+    public ResponseEntity<Media> create(@RequestBody MediaDto mediaTobeCreated) {
+        Media newMedia = service.create(mediaTobeCreated);
+        return ResponseEntity.ok(newMedia);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable(name="id") Long id) {
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Media> update(
+            @PathVariable(name = "id") Long id,
+            @RequestBody MediaDto newInfo) {
+        Media updatedMedia = service.update(id, newInfo);
+
+        return ResponseEntity.ok(updatedMedia);
+    }
 }
