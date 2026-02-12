@@ -5,6 +5,7 @@ import com.leomac00.MyMediaTracker.models.Media;
 import com.leomac00.MyMediaTracker.services.MediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,18 +29,21 @@ public class MediaController {
     }
 
     @PostMapping("/create")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Media> create(@RequestBody MediaDto mediaTobeCreated) {
         Media newMedia = service.create(mediaTobeCreated);
         return ResponseEntity.ok(newMedia);
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable(name="id") Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/update/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Media> update(
             @PathVariable(name = "id") Long id,
             @RequestBody MediaDto newInfo) {

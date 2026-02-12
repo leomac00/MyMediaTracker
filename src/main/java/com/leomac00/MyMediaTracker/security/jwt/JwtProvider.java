@@ -59,18 +59,16 @@ public class JwtProvider {
         return createAccessToken(username, roles);
     }
     private DecodedJWT decodeJwt(String token){
-        var alg = Algorithm.HMAC256(secretKey);
         JWTVerifier verifier = JWT.require(algorithm).build();
-        DecodedJWT decodedJWT = verifier.verify(token);
-        return decodedJWT;
+        return verifier.verify(token);
     }
-    private String getAccessToken(String username, List<String> roles, Date now, Date expiry) {
+    private String getAccessToken(String username, List<String> permissions, Date now, Date expiry) {
         String issuerUrl = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .build()
                 .toUriString();
         return JWT.create()
-                .withClaim("roles", roles)
+                .withClaim("authorities", permissions)
                 .withIssuedAt(now)
                 .withExpiresAt(expiry)
                 .withSubject(username)
@@ -84,10 +82,10 @@ public class JwtProvider {
                 .loadUserByUsername(decodedJWT.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
-    private String getRefreshToken(String username, List<String> roles, Date now) {
+    private String getRefreshToken(String username, List<String> permissions, Date now) {
         var expiry = new Date(now.getTime() + (expireLength * 3));
         return JWT.create()
-                .withClaim("roles", roles)
+                .withClaim("authorities", permissions)
                 .withIssuedAt(now)
                 .withExpiresAt(expiry)
                 .withSubject(username)
@@ -107,7 +105,8 @@ public class JwtProvider {
                     ? false
                     : true;
         } catch (Exception e){
-            throw new InvalidJwtAuthException("Invalid Auth token!!!");
+            return false;
         }
     }
+
 }
