@@ -30,8 +30,9 @@ Default username and password: admin:admin123
 - [x] Swagger
 - [x] Authentication (JWT)
 - [ ] Entities
-  - Crud on Media: done
-  - Shield endpoints based on user permissions: TODO next
+  - CRUD on Media: done
+  - Shield endpoints based on user permissions: done
+  - CRUD on user_media: TODO
 - [ ] Tests
 - [ ] Content negotiation
 - [ ] HATEOAS
