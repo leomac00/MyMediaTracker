@@ -8,7 +8,6 @@ import com.leomac00.MyMediaTracker.models.User;
 import com.leomac00.MyMediaTracker.repositories.UserMediaRepository;
 import com.leomac00.MyMediaTracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
