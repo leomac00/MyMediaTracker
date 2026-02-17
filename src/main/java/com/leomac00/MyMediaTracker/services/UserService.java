@@ -1,5 +1,6 @@
 package com.leomac00.MyMediaTracker.services;
 
+import com.leomac00.MyMediaTracker.data.enums.ErrorMessage;
 import com.leomac00.MyMediaTracker.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class UserService implements UserDetailsService {
 
     @Autowired
-    UserRepository repository;
+    UserRepository userRepository;
     private String notFoundMessage = "User not found!!!";
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
