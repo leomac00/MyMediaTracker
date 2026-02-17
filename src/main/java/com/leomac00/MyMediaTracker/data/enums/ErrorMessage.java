@@ -6,7 +6,8 @@ public enum ErrorMessage {
     USER_NOT_FOUND(404, "User requested was not found."),
     INVALID_CREDENTIALS(401, "Invalid credentials."),
     MEDIA_NOT_FOUND(404, "The Media requested was not found."),
-    MEDIA_TYPE_NOT_FOUND(404, "The Media Type requested was not found.");
+    MEDIA_TYPE_NOT_FOUND(404, "The Media Type requested was not found."),
+    OPTION_REQUIRED(412, "The request is missing params for the request ot be completed.");
 
     private final int code;
     @Getter

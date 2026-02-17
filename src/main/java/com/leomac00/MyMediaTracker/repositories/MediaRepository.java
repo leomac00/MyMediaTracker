@@ -15,4 +15,6 @@ public interface MediaRepository extends JpaRepository<Media, Long> {
     int softDeleteById(Long id);
 
     Optional<Media> findByIdAndDeletedFalse(Long id);
+
+    Optional<List<Media>> findAllByIdInAndDeletedFalse(List<Long> mediaIds);
 }

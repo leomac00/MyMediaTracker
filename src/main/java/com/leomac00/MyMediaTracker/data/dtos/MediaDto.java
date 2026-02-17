@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MediaDto implements BaseDto {
+    private Long mediaId;
     private String title;
     private String description;
     private String coverUri;

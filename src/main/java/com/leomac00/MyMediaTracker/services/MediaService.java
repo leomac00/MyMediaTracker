@@ -7,7 +7,6 @@ import com.leomac00.MyMediaTracker.models.Media;
 import com.leomac00.MyMediaTracker.models.MediaType;
 import com.leomac00.MyMediaTracker.repositories.MediaRepository;
 import com.leomac00.MyMediaTracker.repositories.MediaTypeRepository;
-import com.leomac00.MyMediaTracker.services.common.BaseService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +16,17 @@ import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
-public class MediaService implements BaseService<MediaDto, Media> {
+public class MediaService {
 
     @Autowired
-    private MediaRepository repository;
+    private MediaRepository mediaRepository;
 
     @Autowired
     private MediaTypeRepository mediaTypeRepository;
 
 
     private Media getMediaOrElseThrow(Long id) {
-        return repository.findByIdAndDeletedFalse(id).orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.MEDIA_NOT_FOUND.getMessage()));
+        return mediaRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.MEDIA_NOT_FOUND.getMessage()));
     }
 
     public Media findById(Long id){return getMediaOrElseThrow(id);}
@@ -46,24 +45,24 @@ public class MediaService implements BaseService<MediaDto, Media> {
                 false
         );
         try{
-            repository.save(media);
+            mediaRepository.save(media);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return repository.save(media);
+        return mediaRepository.save(media);
     }
 
     @Transactional
     public void deleteById(Long id) {
-        int updated = repository.softDeleteById(id);
+        int updated = mediaRepository.softDeleteById(id);
         if (updated == 0) {throw new EntityNotFoundException(ErrorMessage.MEDIA_NOT_FOUND.getMessage());
         }
     }
 
     @Transactional
     public Media update (Long id, MediaDto mediaDto) {
-        Media mediaToBeUpdated = repository.findByIdAndDeletedFalse(id).orElseThrow(() -> new RuntimeException(ErrorMessage.MEDIA_NOT_FOUND.getMessage()));
+        Media mediaToBeUpdated = mediaRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new RuntimeException(ErrorMessage.MEDIA_NOT_FOUND.getMessage()));
         MediaType mediaType = mediaTypeRepository.findByIdAndDeletedFalse(mediaDto.getMediaTypeId())
                 .orElseThrow(() -> new RuntimeException(ErrorMessage.MEDIA_TYPE_NOT_FOUND.getMessage()));
 
@@ -72,11 +71,11 @@ public class MediaService implements BaseService<MediaDto, Media> {
         mediaToBeUpdated.setCoverUri(mediaDto.getCoverUri());
         mediaToBeUpdated.setMediaType(mediaType);
 
-        return repository.save(mediaToBeUpdated);
+        return mediaRepository.save(mediaToBeUpdated);
     }
 
     public List<Media> findAll() {
-        return repository.findAll().stream().filter(item -> !item.getDeleted()).toList();
+        return mediaRepository.findAll().stream().filter(item -> !item.getDeleted()).toList();
     }
 }
 
