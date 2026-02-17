@@ -15,12 +15,7 @@ public class UserService implements UserDetailsService {
     private String notFoundMessage = "User not found!!!";
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        var user = repository.findByUsername(username);
-
-        if(user != null){
-            return user;
-        } else {
-            throw new UsernameNotFoundException(notFoundMessage);
-        }
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(ErrorMessage.USER_NOT_FOUND.getMessage()));
     }
 }
